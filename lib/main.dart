@@ -37,6 +37,15 @@ class MyHomePage extends StatelessWidget {
           notificationPredicate: (ScrollNotification notification) {
             return notification.depth == 1;
           },
+          scrolledUnderElevation: 4.0,
+          shadowColor: Theme.of(context).shadowColor,
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(icon: const Icon(Icons.cloud_outlined), text: titles[0],),
+              Tab(icon: const Icon(Icons.beach_access_sharp), text: titles[1],),
+              Tab(icon: const Icon(Icons.brightness_5_sharp), text: titles[2],),
+            ],
+          ),
         ),
       ),
     );
