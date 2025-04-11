@@ -1,4 +1,10 @@
 <resources>
     <color name="primary">#0088BF</color>
+    <color name="danger">#EA5265</color>
     <color name="neutral2">#DEDEDE</color>
+    <color name="neutral3">#AEAEAE</color>
+    <color name="neutral5">#00121A54</color>
+    <color name="status1">#22ADEF</color>
+    <color name="status2">#79CB65</color>
+    <color name="status3">#DB1F21</color>
 </resources>
