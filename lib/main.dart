@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:order_ui/gen/colors.gen.dart';
 import 'package:order_ui/pages/home_page.dart';
 
 void main() {
@@ -16,9 +15,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0088BF),
-          brightness: Brightness.light,
+        colorScheme: const ColorScheme(
+          primary: Color(0xFF0088BF),
+          brightness: Brightness.light, 
+          onPrimary: Colors.white, 
+          secondary: Color(0xFFFAEC8A), 
+          onSecondary: Colors.black, 
+          error: Color(0xFFEA5265), 
+          onError: Colors.white, 
+          surface: Colors.white,
+          onSurface: Colors.black,
+          surfaceContainer: Color(0xFFDEDEDE), 
+          surfaceContainerHighest: Color(0xFFAEAEAE)
         ),
         useMaterial3: true,
       ),

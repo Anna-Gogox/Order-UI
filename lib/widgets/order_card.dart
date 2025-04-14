@@ -10,6 +10,7 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).colorScheme.surface,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -20,7 +21,7 @@ class OrderCard extends StatelessWidget {
             SizedBox(height: 16.0,),
             DetailDateAndVehicle(dateOrder: '30/12/2024, 12:00 p.m', vehicle: '1 ton truck'),
             SizedBox(height: 16.0,),
-            Address(appointmentPoint: 'Road A, Street B, Province C, City D', destinationPoint: 'Road A, Street B, Province C, City D'),
+            Address(appointmentPoint: 'Road A, Street B, Province C, City D, hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', destinationPoint: 'Road A, Street B, Province C, City D'),
             SizedBox(height: 16.0,),
             ButtonInOrderItem(textButton: 'Tip driver', status: 'Completed',)
           ],
@@ -88,7 +89,7 @@ class IdAndStatus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [Text(id), SizedBox(width: 8.0), StatusLabel(status: 'Label',)],
+      children: [Text(id, style: TextStyle(fontWeight: FontWeight.bold)), SizedBox(width: 8.0), StatusLabel(status: 'Label',)],
     );
   }
 }
@@ -101,7 +102,7 @@ class AmountTotal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final won = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
-    return IconWithText(iconAsset: Assets.icons.creditCard, color: Theme.of(context).colorScheme.secondaryFixedDim, text: won.format(number));
+    return IconWithText(iconAsset: Assets.icons.creditCard, color: Theme.of(context).colorScheme.surfaceContainerHighest, text: won.format(number));
   }
 }
 
@@ -119,15 +120,15 @@ class DetailDateAndVehicle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Date Order', style: TextStyle(color: Theme.of(context).colorScheme.secondaryFixedDim)),
-            Text(dateOrder),
+            Text('Date Order', style: TextStyle(color: Theme.of(context).colorScheme.surfaceContainerHighest)),
+            Text(dateOrder, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Vehicle', style: TextStyle(color: Theme.of(context).colorScheme.secondaryFixedDim)),
-            Text(vehicle),
+            Text('Vehicle', style: TextStyle(color: Theme.of(context).colorScheme.surfaceContainerHighest)),
+            Text(vehicle, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ],
@@ -235,7 +236,7 @@ class ButtonInOrderItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(child: DesignButton(textButton: 'Reorder',),),
-          SizedBox(width: 16.0,),
+          SizedBox(width: 25.0,),
           Expanded(child: DesignButton(textButton: 'Receipt', status: status,)),
         ],
       );
