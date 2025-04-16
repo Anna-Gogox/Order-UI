@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
-import 'package:order_ui/core/theme/theme.dart';
 import 'package:order_ui/gen/assets.gen.dart';
 
 class OrderCard extends StatefulWidget {
