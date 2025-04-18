@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
 import 'package:order_ui/gen/assets.gen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:order_ui/utils/formatters.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({super.key});
@@ -30,7 +32,7 @@ class _OrderCardState extends State<OrderCard> {
             SizedBox(height: 12.0,),
             DetailDateAndVehicle(dateOrder: '30/12/2024, 12:00 p.m', vehicle: '1 ton truck'),
             SizedBox(height: 12.0,),
-            Address(appointmentPoint: 'Road A, Street B, Province C, City D, hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhkkkkkkkkkkkkkkkk', destinationPoint: 'Road A, Street B, Province C, City D'),
+            Address(appointmentPoint: 'Road A, Street B, Province C, City D', destinationPoint: 'Road A, Street B, Province C, City D'),
             SizedBox(height: 12.0,),
             ButtonInOrderItem(textButton: 'Tip driver',)
           ],
@@ -103,8 +105,7 @@ class AmountTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final won = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
-    return IconWithText(iconAsset: Assets.icons.creditCard, color: Theme.of(context).colorScheme.surfaceDim, text: won.format(number));
+    return IconWithText(iconAsset: Assets.icons.creditCard, color: AppPallete.neutral3, text: formatWon(number));
   }
 }
 
@@ -191,7 +192,7 @@ class Address extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(appointmentPoint),
-                const SizedBox(height: 4),
+                const SizedBox(height: 26),
                 Text(destinationPoint),
               ],
             ),

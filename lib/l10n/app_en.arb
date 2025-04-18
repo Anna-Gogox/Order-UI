@@ -1,0 +1,12 @@
+{
+    "@@locale": "en",
+    "title_app_bar": "{title}",
+    "@title_app_bar": {
+        "description": "The title of the app bar",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    }
+}

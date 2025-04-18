@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:order_ui/features/order/presentation/widgets/list_chip.dart';
-import 'package:order_ui/features/order/presentation/widgets/order_card.dart';
+import 'package:order_ui/widgets/list_chip.dart';
+import 'package:order_ui/widgets/order_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order list'),
+        title: Text(AppLocalizations.of(context)!.title_app_bar('Order list')),
         scrolledUnderElevation: 0,
         elevation: 0,
         backgroundColor: Colors.white,

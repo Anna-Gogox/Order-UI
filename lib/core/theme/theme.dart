@@ -29,6 +29,18 @@ class AppTheme {
     primaryColor: AppPallete.primary,
     scaffoldBackgroundColor: AppPallete.neutral4,
     textTheme: AppTextTheme.lightTextTheme,
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: AppPallete.primary,
+      onPrimary: Colors.white,
+      secondary: AppPallete.secondary,
+      onSecondary: Colors.black,
+      error: AppPallete.danger,
+      onError: Colors.white,
+      surface: Colors.white,
+      onSurface: Colors.black,
+      surfaceContainer: AppPallete.neutral4,
+    ),
   );
 
   static ThemeData darkThemeMode = ThemeData(
