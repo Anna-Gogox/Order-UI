@@ -1,14 +1,5 @@
-// dart format width=80
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'order_service.dart';
 
-// **************************************************************************
-// ChopperGenerator
-// **************************************************************************
-
-// coverage:ignore-file
-// ignore_for_file: type=lint
 final class _$OrderService extends OrderService {
   _$OrderService([ChopperClient? client]) {
     if (client == null) return;
@@ -19,8 +10,8 @@ final class _$OrderService extends OrderService {
   final Type definitionType = OrderService;
 
   @override
-  Future<Response<dynamic>> getOrders() {
-    final Uri $url = Uri.parse('/posts');
+  Future<Response<dynamic>> getOrders(Map<String, String> queryParams) {
+    final Uri $url = Uri.parse('/posts').replace(queryParameters: queryParams);
     final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }

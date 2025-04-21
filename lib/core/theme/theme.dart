@@ -41,6 +41,7 @@ class AppTheme {
       onSurface: Colors.black,
       surfaceContainer: AppPallete.neutral4,
     ),
+    
   );
 
   static ThemeData darkThemeMode = ThemeData(

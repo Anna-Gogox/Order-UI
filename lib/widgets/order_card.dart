@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
 import 'package:order_ui/gen/assets.gen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:order_ui/utils/formatters.dart';
 
 class OrderCard extends StatefulWidget {
-  const OrderCard({super.key});
+  final int orderId;
+  const OrderCard({super.key, required this.orderId});
 
   @override
   State<OrderCard> createState() => _OrderCardState();
@@ -17,6 +16,7 @@ class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      //margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 12.0),
       color: Theme.of(context).colorScheme.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -26,7 +26,7 @@ class _OrderCardState extends State<OrderCard> {
         padding: const EdgeInsets.only(top: 16.0, bottom: 24.0, left: 16.0, right: 16.0),
         child: Column(
           children: [
-            IdAndStatus(id: '#123456'),
+            IdAndStatus(id: "#${widget.orderId.toString()}"),
             SizedBox(height: 12.0,),
             AmountTotal(number: 4300),
             SizedBox(height: 12.0,),

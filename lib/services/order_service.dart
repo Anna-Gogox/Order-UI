@@ -5,7 +5,7 @@ part 'order_service.chopper.dart';
 @ChopperApi(baseUrl: '/posts')
 abstract class OrderService extends ChopperService{
   @GET()
-  Future<Response> getOrders();
+  Future<Response> getOrders(Map<String, String> map);
 
   @GET(path: '/{id}')
   Future<Response> getOrderById(@Path('id') int id);
@@ -18,6 +18,10 @@ abstract class OrderService extends ChopperService{
       baseUrl: Uri.parse('https://jsonplaceholder.typicode.com'),
       services: [_$OrderService()],
       converter: JsonConverter(),
+      interceptors: [
+        HeadersInterceptor({'Cache-Control': 'no-cache'}),
+        HttpLoggingInterceptor()
+      ]
     );
     return _$OrderService(client);
   }
