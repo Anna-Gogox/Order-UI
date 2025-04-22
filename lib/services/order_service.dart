@@ -20,7 +20,20 @@ abstract class OrderService extends ChopperService{
       converter: JsonConverter(),
       interceptors: [
         HeadersInterceptor({'Cache-Control': 'no-cache'}),
-        HttpLoggingInterceptor()
+        //HttpLoggingInterceptor(),
+        CurlInterceptor(),
+        // (Request request) async {
+        //   if (request.method == HttpMethod.Post) {
+        //     chopperLogger.info('Performed a POST request');
+        //   }
+        //   return request;
+        // },
+        // (Response response) async {
+        //   if (response.statusCode == 404) {
+        //     chopperLogger.severe('404 Not Found');
+        //   }
+        //   return response;
+        // }
       ]
     );
     return _$OrderService(client);

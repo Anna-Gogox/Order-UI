@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_ui/blocs/internet_bloc/internet_bloc.dart';
 import 'package:order_ui/core/theme/theme.dart';
 import 'package:order_ui/pages/order_list_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:order_ui/services/order_service.dart';
-import 'package:provider/provider.dart';
 import 'package:logging/logging.dart';
 
 void main() {
@@ -23,9 +23,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => OrderService.create(),
-      dispose: (_, OrderService service) => service.client.dispose(),
+    return BlocProvider(
+      // create: (_) => OrderService.create(),
+      // dispose: (_, OrderService service) => service.client.dispose(),
+      create: (context) => InternetBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

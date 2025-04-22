@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_ui/blocs/internet_bloc/internet_bloc.dart';
+import 'package:order_ui/blocs/internet_bloc/internet_state.dart';
 import 'package:order_ui/pages/detail_order_page.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/widgets/list_chip.dart';
@@ -43,7 +46,28 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: _buildBody(context),
+      body: BlocConsumer<InternetBloc, InternetState>(
+        listener: (context, state) {
+          if (state is InternetLostState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('No internet connection')),
+            );
+          } else if (state is InternetGainedState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Internet connected!')),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is InternetLostState) {
+            return const Center(child: Text('No internet connection'));
+          } else if (state is InternetGainedState) {
+            return const Center(child: Text('Internet connected!'));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
       
     );
   }
