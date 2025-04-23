@@ -1,16 +1,14 @@
-import 'dart:convert';
-
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:order_ui/blocs/internet_bloc/internet_bloc.dart';
-import 'package:order_ui/blocs/internet_bloc/internet_state.dart';
+import 'package:order_ui/blocs/network/network_bloc.dart';
+import 'package:order_ui/blocs/network/network_state.dart';
+import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
+import 'package:order_ui/blocs/order/order_list/order_list_event.dart';
+import 'package:order_ui/blocs/order/order_list/order_list_state.dart';
 import 'package:order_ui/pages/detail_order_page.dart';
-import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/widgets/list_chip.dart';
 import 'package:order_ui/widgets/order_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,46 +45,45 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: BlocConsumer<InternetBloc, InternetState>(
+      body: BlocConsumer<NetworkBloc, NetworkState>(
         listener: (context, state) {
-          if (state is InternetLostState) {
+          if (state is NetworkFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('No internet connection')),
             );
-          } else if (state is InternetGainedState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Internet connected!')),
-            );
+          } else if (state is NetworkSuccess) {
+            context.read<OrderListBloc>().add(OrderListLoadEvent());
           }
         },
+
         builder: (context, state) {
-          if (state is InternetLostState) {
-            return const Center(child: Text('No internet connection'));
-          } else if (state is InternetGainedState) {
-            return const Center(child: Text('Internet connected!'));
-          } else {
-            return const Center(child: CircularProgressIndicator());
+          if (state is NetworkSuccess) {
+            return _buildBody(context);          
           }
-        },
+          else {
+            return const Center(child: Text('No internet connection'));
+          }
+        }
       ),
       
     );
   }
 }
 
-FutureBuilder<Response> _buildBody(BuildContext context) {
-  return FutureBuilder<Response>(
-    future: Provider.of<OrderService>(context).getOrders({}),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
+Widget _buildBody(BuildContext context) {
+  return BlocBuilder<OrderListBloc, OrderListState>(
+    builder: (context, state) {
+      debugPrint('Response: ${state.runtimeType}');
+
+      if (state is OrderListLoadingState) {
         return const Center(child: CircularProgressIndicator());
-      } else if (snapshot.hasError) {
-        return Center(child: Text('Error: ${snapshot.error}'));
-      } else if (snapshot.hasData) {
-        final List orders = json.decode(snapshot.data!.bodyString);
-        return _buildOrderList(context, orders);
+      } else if (state is OrderListLoadedState) {
+        return _buildOrderList(context, state.orders);
+      } else if (state is OrderListErrorState) {
+        debugPrint('Response: ${state.error}');
+        return const Center(child: Text('Failed to load orders'));
       } else {
-        return const Center(child: Text('No data available'));
+        return const Center(child: Text('No orders available'));
       }
     },
   );
