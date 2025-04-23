@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
-import 'package:order_ui/services/order_service.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
+import 'package:order_ui/blocs/order/detail_order/detail_order_state.dart';
 
 class DetailOrderScreen extends StatelessWidget {
   final int orderId;
@@ -14,16 +12,14 @@ class DetailOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Order Detail")),
-      body: FutureBuilder<Response>(
-        future: Provider.of<OrderService>(context).getOrderById(orderId),
+      body: BlocBuilder<DetailOrderBloc, DetailOrderState>(
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot is DetailOrderLoadingState) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
+          } else if (snapshot is DetailOrderErrorState) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot.hasData) {
-            final Map order = json.decode(snapshot.data!.bodyString);
-            return _buildOrder(order);
+          } else if (snapshot is DetailOrderLoadedState) {
+            return _buildOrder(snapshot.order);
           } else {
             return const Center(child: Text('No data found'));
           }

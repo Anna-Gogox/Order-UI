@@ -3,22 +3,22 @@ import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_state.dart';
 import 'package:order_ui/services/order_service.dart';
 
-class DetailOrderListBloc extends Bloc<DetailOrderListEvent, DetailOrderListState> {
+class DetailOrderBloc extends Bloc<DetailOrderEvent, DetailOrderState> {
 
   final OrderService orderService;
 
-  DetailOrderListBloc(this.orderService) : super( DetailOrderListInitialState() ) {
-    on<DetailOrderListLoadEvent>((event, emit) async {
-      emit(DetailOrderListLoadingState());
+  DetailOrderBloc(this.orderService) : super( DetailOrderInitialState() ) {
+    on<DetailOrderRequested>((event, emit) async {
+      emit(DetailOrderLoadingState());
       try {
-        final response = await orderService.getOrders({});
+        final response = await orderService.getOrderById(event.orderId);
         if (response.isSuccessful) {
-          emit(DetailOrderListLoadedState(response.body));
+          emit(DetailOrderLoadedState(response.body));
         } else {
-          emit(DetailOrderListErrorState('Error: ${response.error}'));
+          emit(DetailOrderErrorState('Error: ${response.error}'));
         }
       } catch (e) {
-        emit(DetailOrderListErrorState('Error: ${e.toString()}'));
+        emit(DetailOrderErrorState('Error: ${e.toString()}'));
       }
     });
   }

@@ -1,3 +1,9 @@
-abstract class DetailOrderListEvent {}
+abstract class DetailOrderEvent {}
 
-class DetailOrderListLoadEvent extends DetailOrderListEvent {}
+class DetailOrderLoadEvent extends DetailOrderEvent {}
+
+final class DetailOrderRequested extends DetailOrderEvent {
+  final int orderId;
+
+  DetailOrderRequested(this.orderId);
+}

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
+import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
 import 'package:order_ui/gen/assets.gen.dart';
+import 'package:order_ui/pages/detail_order_page.dart';
+import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/utils/formatters.dart';
 
 class OrderCard extends StatefulWidget {
@@ -15,31 +20,57 @@ class OrderCard extends StatefulWidget {
 class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      //margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 12.0),
-      color: Theme.of(context).colorScheme.surface,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16.0, bottom: 24.0, left: 16.0, right: 16.0),
-        child: Column(
-          children: [
-            IdAndStatus(id: "#${widget.orderId.toString()}"),
-            SizedBox(height: 12.0,),
-            AmountTotal(number: 4300),
-            SizedBox(height: 12.0,),
-            DetailDateAndVehicle(dateOrder: '30/12/2024, 12:00 p.m', vehicle: '1 ton truck'),
-            SizedBox(height: 12.0,),
-            Address(appointmentPoint: 'Road A, Street B, Province C, City D', destinationPoint: 'Road A, Street B, Province C, City D'),
-            SizedBox(height: 12.0,),
-            ButtonInOrderItem(textButton: 'Tip driver',)
-          ],
+    return InkWell(
+      onTap: () => _navigateToDetailPage(context, widget.orderId),
+      child: Card(
+        margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 12.0),
+        color: Theme.of(context).colorScheme.surface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+            bottom: 24.0,
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: Column(
+            children: [
+              IdAndStatus(id: "#${widget.orderId.toString()}"),
+              SizedBox(height: 12.0),
+              AmountTotal(number: 4300),
+              SizedBox(height: 12.0),
+              DetailDateAndVehicle(
+                dateOrder: '30/12/2024, 12:00 p.m',
+                vehicle: '1 ton truck',
+              ),
+              SizedBox(height: 12.0),
+              Address(
+                appointmentPoint: 'Road A, Street B, Province C, City D',
+                destinationPoint: 'Road A, Street B, Province C, City D',
+              ),
+              SizedBox(height: 12.0),
+              ButtonInOrderItem(textButton: 'Tip driver'),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+void _navigateToDetailPage(BuildContext context, int id) {
+  final orderService = RepositoryProvider.of<OrderService>(context);
+
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (context) => BlocProvider(
+        create: (_) => DetailOrderBloc(orderService)
+          ..add(DetailOrderRequested(id)),
+        child: DetailOrderScreen(orderId: id),
+      ),
+    ),
+  );
 }
 
 class StatusLabel extends StatelessWidget {

@@ -1,17 +1,15 @@
-abstract class DetailOrderListState {}
+abstract class DetailOrderState {}
 
-class DetailOrderListInitialState extends DetailOrderListState {}
+class DetailOrderInitialState extends DetailOrderState {}
 
-class DetailOrderListLoadingState extends DetailOrderListState {}
+class DetailOrderLoadingState extends DetailOrderState {}
 
-class DetailOrderListLoadedState extends DetailOrderListState {
-  final order;
-
-  DetailOrderListLoadedState(this.order);
+class DetailOrderLoadedState extends DetailOrderState {
+  final Map order;
+  DetailOrderLoadedState(this.order);
 }
 
-class DetailOrderListErrorState extends DetailOrderListState {
+class DetailOrderErrorState extends DetailOrderState {
   final String error;
-
-  DetailOrderListErrorState(this.error);
+  DetailOrderErrorState(this.error);
 }

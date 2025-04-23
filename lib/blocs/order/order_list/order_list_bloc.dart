@@ -20,7 +20,12 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
           emit(OrderListErrorState('Error: ${response.error}'));
         }
       } catch (e) {
-        emit(OrderListErrorState('Error: ${e.toString()}'));
+        if (_cachedState != null) {
+          emit(_cachedState!);
+        } else {
+          emit(OrderListErrorState('Error: ${e.toString()}'));
+        }
+        //emit(OrderListErrorState('Error: ${e.toString()}'));
       }
     });
   }
