@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_ui/blocs/network/network_bloc.dart';
+import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
+import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_state.dart';
 
 class DetailOrderScreen extends StatelessWidget {
@@ -12,18 +15,26 @@ class DetailOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Order Detail")),
-      body: BlocBuilder<DetailOrderBloc, DetailOrderState>(
-        builder: (context, snapshot) {
-          if (snapshot is DetailOrderLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot is DetailOrderErrorState) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot is DetailOrderLoadedState) {
-            return _buildOrder(snapshot.order);
-          } else {
-            return const Center(child: Text('No data found'));
+      body: BlocListener<NetworkBloc, NetworkState>(
+        listener: (context, state) {
+          if (state is NetworkSuccess) {
+            final orderId = this.orderId;
+            context.read<DetailOrderBloc>().add(DetailOrderRequested(orderId));
           }
         },
+        child: BlocBuilder<DetailOrderBloc, DetailOrderState>(
+          builder: (context, snapshot) {
+            if (snapshot is DetailOrderLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot is DetailOrderErrorState) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot is DetailOrderLoadedState) {
+              return _buildOrder(snapshot.order);
+            } else {
+              return const Center(child: Text(''));
+            }
+          },
+        ),
       ),
     );
   }
