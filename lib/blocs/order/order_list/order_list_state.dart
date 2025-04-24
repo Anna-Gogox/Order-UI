@@ -1,17 +1,29 @@
-abstract class OrderListState {}
+import 'package:order_ui/models/order.dart';
 
-class OrderListInitialState extends OrderListState {}
+class OrderListState {
+  final List<Order> orders;
+  final bool isLoading;
+  final bool hasMore;
+  final String? errorMessage;
 
-class OrderListLoadingState extends OrderListState {}
+  OrderListState({
+    this.orders = const [],
+    this.isLoading = false,
+    this.hasMore = true,
+    this.errorMessage,
+  });
 
-class OrderListLoadedState extends OrderListState {
-  final List<dynamic> orders;
-
-  OrderListLoadedState(this.orders);
-}
-
-class OrderListErrorState extends OrderListState {
-  final String error;
-
-  OrderListErrorState(this.error);
+  OrderListState copyWith({
+    List<Order>? orders,
+    bool? isLoading,
+    bool? hasMore,
+    String? errorMessage,
+  }) {
+    return OrderListState(
+      orders: orders ?? this.orders,
+      isLoading: isLoading ?? this.isLoading,
+      hasMore: hasMore ?? this.hasMore,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }

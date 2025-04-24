@@ -1,3 +1,7 @@
 abstract class OrderListEvent {}
 
-class OrderListLoadEvent extends OrderListEvent {}
+class OrderListFetchEvent extends OrderListEvent {}
+
+class OrderListLoadMoreEvent extends OrderListEvent {}
+
+class OrderListRefreshEvent extends OrderListEvent {}

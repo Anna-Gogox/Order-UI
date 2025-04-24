@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Back online')),
             );
-            context.read<OrderListBloc>().add(OrderListLoadEvent());
+            context.read<OrderListBloc>().add(OrderListFetchEvent());
           }
         },
         child: Scaffold(
@@ -61,16 +61,13 @@ class _HomePageState extends State<HomePage> {
           ),
           body: BlocBuilder<OrderListBloc, OrderListState>(
             builder: (context, orderState) {
-              debugPrint('OrderListState: $orderState');
-              if (orderState is OrderListLoadingState) {
+              debugPrint('OrderListState: ${orderState.toString()}');
+              if (orderState.isLoading) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (orderState is OrderListLoadedState) {
-                return _buildOrderList(context, orderState.orders);
-              } else if (orderState is OrderListErrorState) {
-                return Center(child: Text(orderState.error));
-              } else {
-                return Center(child: Text(""));
-              }
+              } else if (orderState.errorMessage != null) {
+                return Center(child: Text(orderState.errorMessage!));
+              } 
+              return _buildOrderList(context, orderState.orders, orderState);
             }
           ),
         ),
@@ -79,11 +76,31 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-ListView _buildOrderList(BuildContext context, List orders) {
-  return ListView.builder(
-    itemCount: orders.length,
-    itemBuilder: (context, index) {
-      return OrderCard(orderId: orders[index]["id"]);
+Widget _buildOrderList(BuildContext context, List orders, OrderListState state) {
+  debugPrint('Orders: ${orders.length}');
+  return RefreshIndicator(
+    onRefresh: () async {
+      context.read<OrderListBloc>().add(OrderListRefreshEvent());
     },
+    child: NotificationListener<ScrollNotification>(
+      onNotification: (scrollInfo) {
+        if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
+          !state.isLoading &&
+          state.hasMore) {
+            context.read<OrderListBloc>().add(OrderListLoadMoreEvent());
+          }
+          return false;
+      },
+      child: ListView.builder(
+        itemCount: state.orders.length + (state.hasMore ? 1 : 0),
+        itemBuilder: (context, index) {
+          if (index < state.orders.length) {
+            return OrderCard(orderId: orders[index].id);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+    ),
   );
 }
