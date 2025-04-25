@@ -19,7 +19,7 @@ abstract class OrderService extends ChopperService{
       services: [_$OrderService()],
       converter: JsonConverter(),
       interceptors: [
-        HeadersInterceptor({'Authorization': 'Token token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYXV0aFR5cGUiOiIiLCJfYnJhbmNoQ29kZSI6MCwiX2lkIjozNTQ0NDMsIl9pZFRva2VuIjoiMzM2YzdiZGEtMjBmNC0xMWYwLThhNDktMGE5OGM1YWJkY2QzIiwiX29yZ0lkIjoxMiwiZXhwIjo'}),
+        HeadersInterceptor({'Authorization': 'Token token='}),
         HttpLoggingInterceptor(),
         CurlInterceptor(),
       ]

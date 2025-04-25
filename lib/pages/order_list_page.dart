@@ -95,7 +95,7 @@ Widget _buildOrderList(BuildContext context, List orders, OrderListState state) 
         itemCount: state.orders.length + (state.hasMore ? 1 : 0),
         itemBuilder: (context, index) {
           if (index < state.orders.length) {
-            return OrderCard(orderId: orders[index].id);
+            return OrderCard(order: orders[index]);
           } else {
             return Center(child: CircularProgressIndicator());
           }

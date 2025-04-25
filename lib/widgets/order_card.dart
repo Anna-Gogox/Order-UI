@@ -5,23 +5,21 @@ import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
 import 'package:order_ui/gen/assets.gen.dart';
+import 'package:order_ui/models/order.dart';
 import 'package:order_ui/pages/detail_order_page.dart';
 import 'package:order_ui/services/order_service.dart';
+import 'package:order_ui/utils/date_time_formatter.dart';
 import 'package:order_ui/utils/formatters.dart';
 
-class OrderCard extends StatefulWidget {
-  final int orderId;
-  const OrderCard({super.key, required this.orderId});
+class OrderCard extends StatelessWidget {
+  final Order order;
 
-  @override
-  State<OrderCard> createState() => _OrderCardState();
-}
+  const OrderCard({super.key, required this.order});
 
-class _OrderCardState extends State<OrderCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _navigateToDetailPage(context, widget.orderId),
+      onTap: () => _navigateToDetailPage(context, order.id),
       child: Card(
         margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 12.0),
         color: Theme.of(context).colorScheme.surface,
@@ -36,18 +34,18 @@ class _OrderCardState extends State<OrderCard> {
           ),
           child: Column(
             children: [
-              IdAndStatus(id: "#${widget.orderId.toString()}"),
+              IdAndStatus(id: "#${order.id.toString()}"),
               SizedBox(height: 12.0),
-              AmountTotal(number: 4300),
+              AmountTotal(number: order.total ?? 0),
               SizedBox(height: 12.0),
               DetailDateAndVehicle(
-                dateOrder: '30/12/2024, 12:00 p.m',
-                vehicle: '1 ton truck',
+                dateOrder: DateTimeFormatter.formatDateTime(order.appointmentAt),
+                vehicle: order.vehiclePool?.name ?? 'Unknown',
               ),
               SizedBox(height: 12.0),
               Address(
-                appointmentPoint: 'Road A, Street B, Province C, City D',
-                destinationPoint: 'Road A, Street B, Province C, City D',
+                appointmentPoint: order.fromPlace ?? 'Unknown',
+                destinationPoint: order.toPlace ?? 'Unknown',
               ),
               SizedBox(height: 12.0),
               ButtonInOrderItem(textButton: 'Tip driver'),
