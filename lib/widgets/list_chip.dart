@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
+import 'package:order_ui/blocs/order/order_list/order_list_event.dart';
 
 class ListChip extends StatefulWidget {
   const ListChip({super.key});
@@ -9,7 +12,7 @@ class ListChip extends StatefulWidget {
 
 class _ListChipState extends State<ListChip> {
   int selectedIndex = 0;
-  final List<String> categories = [
+  final List<String> filters = [
     'All',
     'Searching',
     'Active',
@@ -21,7 +24,7 @@ class _ListChipState extends State<ListChip> {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: categories.length,
+      itemCount: filters.length,
       itemBuilder: (context, index) {
         final isSelected = index == selectedIndex;
         
@@ -29,7 +32,7 @@ class _ListChipState extends State<ListChip> {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: ChoiceChip(
             label: Text(
-              categories[index],
+              filters[index],
               style: TextStyle(
                 color:
                     isSelected
@@ -51,6 +54,12 @@ class _ListChipState extends State<ListChip> {
               setState(() {
                 selectedIndex = index;
               });
+              final filter = filters[index].toLowerCase();
+              context.read<OrderListBloc>().add(
+                    OrderListFetchEvent(
+                      filter: filter,
+                    ),
+                  );
             },
           ),
         );

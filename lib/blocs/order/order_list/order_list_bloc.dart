@@ -21,13 +21,14 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
     OrderListFetchEvent event,
     Emitter<OrderListState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, errorMessage: null));
+    emit(state.copyWith(isLoading: true, errorMessage: null, filter: event.filter));
     try {
-      final response = await orderService.getOrders(filter: 'all', page: 1);
-      final List data = response.body;
+      final response = await orderService.getOrders(filter: event.filter, page: 1);
+      final List<dynamic> data = response.body;
       final List<Order> orders =
           data.map((json) => Order.fromJson(json)).toList();
       _page = 2;
+
       emit(
         state.copyWith(
           isLoading: false,
@@ -49,14 +50,16 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
     OrderListLoadMoreEvent event,
     Emitter<OrderListState> emit,
   ) async {
-    if (!state.hasMore) return;
+    if (state.isLoading || !state.hasMore) return;
+    emit(state.copyWith(isLoading: true));
 
     try {
-      final response = await orderService.getOrders(filter: 'all', page: _page);
-      final List data = response.body;
+      final response = await orderService.getOrders(filter: state.filter, page: _page);
+      final List<dynamic> data = response.body;
       final List<Order> moreOrders =
           data.map((json) => Order.fromJson(json)).toList();
-      _page+=4;
+      _page++;
+
       emit(
         state.copyWith(
           orders: [...state.orders, ...moreOrders],
@@ -66,6 +69,7 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
     } catch (e) {
       emit(
         state.copyWith(
+          isLoading: false,
           errorMessage: 'Error - Failed to load more orders: ${e.toString()}',
         ),
       );
@@ -75,10 +79,11 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
   Future<void> _onRefreshOrders(OrderListRefreshEvent event, Emitter<OrderListState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
-      final response = await orderService.getOrders(filter: 'all', page: 1);
-      final data = response.body as List;
-      final orders = data.map((json) => Order.fromJson(json)).toList();
-      
+      final response = await orderService.getOrders(filter: state.filter, page: 1);
+      final List<dynamic> data = response.body;
+      final List<Order> orders = data.map((json) => Order.fromJson(json)).toList();
+      _page = 2;
+
       emit(
         state.copyWith(
           isLoading: false,
