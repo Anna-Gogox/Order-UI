@@ -50,8 +50,7 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
     OrderListLoadMoreEvent event,
     Emitter<OrderListState> emit,
   ) async {
-    if (state.isLoading || !state.hasMore) return;
-    emit(state.copyWith(isLoading: true));
+    if (!state.hasMore) return;
 
     try {
       final response = await orderService.getOrders(filter: state.filter, page: _page);
