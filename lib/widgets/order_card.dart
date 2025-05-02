@@ -30,7 +30,7 @@ class OrderCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              IdAndStatus(id: "#${order.id.toString()}"),
+              IdAndStatus(id: "#${order.id.toString()}", status: order.getStatus(context)),
               SizedBox(height: 12.0),
               AmountTotal(number: order.total ?? 0),
               SizedBox(height: 12.0),
@@ -101,14 +101,14 @@ class IconWithText extends StatelessWidget {
 }
 
 class IdAndStatus extends StatelessWidget {
-  const IdAndStatus({super.key, required this.id});
+  const IdAndStatus({super.key, required this.id, required this.status});
 
-  final String id;
+  final String id, status;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [Text(id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 0.04)), SizedBox(width: 8.0), StatusLabel(status: 'Label',)],
+      children: [Text(id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 0.04)), SizedBox(width: 8.0), StatusLabel(status: status,)],
     );
   }
 }

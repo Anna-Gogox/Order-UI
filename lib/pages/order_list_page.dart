@@ -40,8 +40,10 @@ class _OrderListPageState extends State<OrderListPage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              AppLocalizations.of(context)!.title_app_bar('Order list'),
+            title: Center(
+              child: Text(
+                AppLocalizations.of(context)!.title_app_bar('Order list'),
+              ),
             ),
             scrolledUnderElevation: 0,
             elevation: 0,

@@ -8,5 +8,19 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "ordersStatusPending": "Searching",
+    "@ordersStatusPending": {},
+    "ordersStatusActive": "Active",
+    "@ordersStatusActive": {},
+    "ordersStatusCompleted": "Completed",
+    "@ordersStatusCompleted": {},
+    "ordersStatusIncomplete": "Incomplete",
+    "@ordersStatusIncomplete": {},
+    "ordersStatusCancelled": "Cancelled",
+    "@ordersStatusCancelled": {},
+    "ordersStatusReturned": "Returned",
+    "@ordersStatusReturned": {},
+    "orderStatusWaitingForPayment": "Waiting for payment",
+    "@orderStatusWaitingForPayment": {}
 }
