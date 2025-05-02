@@ -5,6 +5,7 @@ import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_state.dart';
+import 'package:provider/provider.dart' as prov;
 
 class DetailOrderScreen extends StatelessWidget {
   final int orderId;
@@ -14,12 +15,15 @@ class DetailOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Order Detail")),
+      appBar: AppBar(
+        title: Text("Order Detail"),
+      ),
       body: BlocListener<NetworkBloc, NetworkState>(
         listener: (context, state) {
           if (state is NetworkSuccess) {
             final orderId = this.orderId;
-            context.read<DetailOrderBloc>().add(DetailOrderRequested(orderId));
+            prov.Provider.of<DetailOrderBloc>(context, listen: false)
+                .add(DetailOrderRequested(orderId));
           }
         },
         child: BlocBuilder<DetailOrderBloc, DetailOrderState>(

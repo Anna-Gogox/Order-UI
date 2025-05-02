@@ -11,14 +11,14 @@ import 'package:order_ui/widgets/order_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class OrderListPage extends StatefulWidget {
+  const OrderListPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<OrderListPage> createState() => _OrderListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _OrderListPageState extends State<OrderListPage> {
   @override
   Widget build(BuildContext context) {
     final orderService = Provider.of<OrderService>(context, listen: false);

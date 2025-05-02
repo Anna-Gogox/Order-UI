@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
-import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/core/theme/app_pallete.dart';
 import 'package:order_ui/gen/assets.gen.dart';
 import 'package:order_ui/models/order.dart';
-import 'package:order_ui/pages/detail_order_page.dart';
-import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/utils/date_time_formatter.dart';
 import 'package:order_ui/utils/formatters.dart';
 
@@ -58,17 +54,7 @@ class OrderCard extends StatelessWidget {
 }
 
 void _navigateToDetailPage(BuildContext context, int id) {
-  final orderService = RepositoryProvider.of<OrderService>(context);
-
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => BlocProvider(
-        create: (_) => DetailOrderBloc(orderService)
-          ..add(DetailOrderRequested(id)),
-        child: DetailOrderScreen(orderId: id),
-      ),
-    ),
-  );
+  Modular.to.pushNamed('/order/status/$id');
 }
 
 class StatusLabel extends StatelessWidget {
