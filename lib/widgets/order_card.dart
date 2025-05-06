@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:order_ui/core/theme/app_pallete.dart';
+import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:order_ui/gen/assets.gen.dart';
 import 'package:order_ui/models/order.dart';
 import 'package:order_ui/utils/date_time_formatter.dart';
@@ -120,7 +120,7 @@ class AmountTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconWithText(iconAsset: Assets.icons.creditCard, color: AppPallete.neutral3, text: formatWon(number));
+    return IconWithText(iconAsset: Assets.icons.creditCard, color: context.appTheme.pallete.neutral3, text: formatWon(number));
   }
 }
 
@@ -138,7 +138,7 @@ class DetailDateAndVehicle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Date Order', style: TextStyle(color: AppPallete.neutral3)),
+            Text('Date Order', style: TextStyle(color: context.appTheme.pallete.neutral3)),
             SizedBox(height: 4.0,),
             Text(dateOrder, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
@@ -146,7 +146,7 @@ class DetailDateAndVehicle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Vehicle', style: TextStyle(color: AppPallete.neutral3)),
+            Text('Vehicle', style: TextStyle(color: context.appTheme.pallete.neutral3)),
             SizedBox(height: 4.0,),
             Text(vehicle, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
@@ -194,7 +194,7 @@ class Address extends StatelessWidget {
                 child: Container(
                   width: 1,
                   margin: const EdgeInsets.symmetric(vertical: 6),
-                  color: AppPallete.neutral2,
+                  color: context.appTheme.pallete.neutral2,
                 ),
               ),
               IconSection(icon: Assets.icons.point, color: Theme.of(context).colorScheme.error),

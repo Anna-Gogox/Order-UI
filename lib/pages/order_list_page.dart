@@ -5,6 +5,7 @@ import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_event.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_state.dart';
+import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/widgets/list_chip.dart';
 import 'package:order_ui/widgets/order_card.dart';
@@ -22,6 +23,7 @@ class _OrderListPageState extends State<OrderListPage> {
   @override
   Widget build(BuildContext context) {
     final orderService = Provider.of<OrderService>(context, listen: false);
+    final customTheme = context.appTheme;
 
     return BlocProvider<OrderListBloc>(
       create: (_) => OrderListBloc(orderService),
@@ -43,11 +45,12 @@ class _OrderListPageState extends State<OrderListPage> {
             title: Center(
               child: Text(
                 AppLocalizations.of(context)!.title_app_bar('Order list'),
+                style: customTheme.heading1,
               ),
             ),
             scrolledUnderElevation: 0,
             elevation: 0,
-            backgroundColor: Colors.white,
+            backgroundColor: customTheme.appBarBackground,
             surfaceTintColor: Colors.transparent,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(60),
@@ -61,16 +64,19 @@ class _OrderListPageState extends State<OrderListPage> {
               ),
             ),
           ),
-          body: BlocBuilder<OrderListBloc, OrderListState>(
-            builder: (context, orderState) {
-              debugPrint('OrderListState: ${orderState.toString()}');
-              if (orderState.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (orderState.errorMessage != null) {
-                return Center(child: Text(orderState.errorMessage!));
-              } 
-              return _buildOrderList(context, orderState.orders, orderState);
-            }
+          body: Container(
+            color: customTheme.background,
+            child: BlocBuilder<OrderListBloc, OrderListState>(
+              builder: (context, orderState) {
+                debugPrint('OrderListState: ${orderState.toString()}');
+                if (orderState.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (orderState.errorMessage != null) {
+                  return Center(child: Text(orderState.errorMessage!));
+                } 
+                return _buildOrderList(context, orderState.orders, orderState);
+              }
+            ),
           ),
         ),
       ),
@@ -79,7 +85,6 @@ class _OrderListPageState extends State<OrderListPage> {
 }
 
 Widget _buildOrderList(BuildContext context, List orders, OrderListState state) {
-  debugPrint('Orders: ${orders.length}');
   return RefreshIndicator(
     onRefresh: () async {
       context.read<OrderListBloc>().add(OrderListRefreshEvent());

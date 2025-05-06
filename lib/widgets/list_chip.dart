@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_event.dart';
+import 'package:order_ui/core/theme/app_theme.dart';
 
 class ListChip extends StatefulWidget {
   const ListChip({super.key});
@@ -22,6 +23,8 @@ class _ListChipState extends State<ListChip> {
 
   @override
   Widget build(BuildContext context) {
+    final customTheme = context.appTheme;
+    
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: filters.length,
@@ -41,7 +44,7 @@ class _ListChipState extends State<ListChip> {
               ),
             ),
             selected: isSelected,
-            selectedColor: Theme.of(context).colorScheme.secondary,
+            selectedColor: customTheme.pallete.secondary,
             backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
             elevation: 0,
             pressElevation: 0,
