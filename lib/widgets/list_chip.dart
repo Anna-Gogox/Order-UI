@@ -37,15 +37,12 @@ class _ListChipState extends State<ListChip> {
             label: Text(
               filters[index],
               style: TextStyle(
-                color:
-                    isSelected
-                        ? Theme.of(context).colorScheme.onSecondary
-                        : Theme.of(context).colorScheme.onSecondary,
+                color: customTheme.pallete.neutral1,
               ),
             ),
             selected: isSelected,
             selectedColor: customTheme.pallete.secondary,
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
+            backgroundColor: customTheme.pallete.neutral4,
             elevation: 0,
             pressElevation: 0,
             shape: RoundedRectangleBorder(
