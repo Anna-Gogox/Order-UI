@@ -19,7 +19,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
   TextStyle get subtitle2;
   TextStyle get body1;
   TextStyle get caption;
-  AppPallete get pallete;
+  AppPalette get palette;
 
   @override
   AppTheme copyWith({
@@ -32,7 +32,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     TextStyle? subtitle2,
     TextStyle? body1,
     TextStyle? caption,
-    AppPallete? pallete,
+    AppPalette? pallete,
   }) {
     return AppTheme(
       background: background ?? this.background,
@@ -44,7 +44,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       subtitle2: subtitle2 ?? this.subtitle2,
       body1: body1 ?? this.body1,
       caption: caption ?? this.caption,
-      pallete: pallete ?? this.pallete,
+      palette: pallete ?? this.palette,
     );
   }
 
@@ -62,7 +62,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       subtitle2: TextStyle.lerp(subtitle2, other.subtitle2, t)!,
       body1: TextStyle.lerp(body1, other.body1, t)!,
       caption: TextStyle.lerp(caption, other.caption, t)!,
-      pallete: t < 0.5 ? pallete : other.pallete,
+      palette: t < 0.5 ? palette : other.palette,
     );
   }
 
@@ -86,7 +86,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
             const DeepCollectionEquality().equals(subtitle2, other.subtitle2) &&
             const DeepCollectionEquality().equals(body1, other.body1) &&
             const DeepCollectionEquality().equals(caption, other.caption) &&
-            const DeepCollectionEquality().equals(pallete, other.pallete));
+            const DeepCollectionEquality().equals(palette, other.palette));
   }
 
   @override
@@ -102,7 +102,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       const DeepCollectionEquality().hash(subtitle2),
       const DeepCollectionEquality().hash(body1),
       const DeepCollectionEquality().hash(caption),
-      const DeepCollectionEquality().hash(pallete),
+      const DeepCollectionEquality().hash(palette),
     );
   }
 }

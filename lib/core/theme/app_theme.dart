@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:order_ui/core/theme/app_pallete.dart';
+import 'package:order_ui/core/theme/app_palette.dart';
 import 'package:theme_tailor_annotation/theme_tailor_annotation.dart';
 
 part 'app_theme.tailor.dart';
@@ -17,7 +17,7 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
     required this.subtitle2,
     required this.body1,
     required this.caption,
-    required this.pallete,
+    required this.palette,
   });
 
   static const heading1Style = TextStyle(
@@ -68,10 +68,10 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
   @override
   final TextStyle caption;
   @override
-  final AppPallete pallete;
+  final AppPalette palette;
 } 
 
-const lightPallete = AppPallete(
+const lightPalette = AppPalette(
   primary: Color(0xFF0088BF),
   secondary: Color(0xFFFAEC8A),
   danger: Color(0xFFEA5265),
@@ -89,7 +89,7 @@ const lightPallete = AppPallete(
 );
 
 final lightAppTheme = AppTheme(
-  background: lightPallete.neutral4,
+  background: lightPalette.neutral4,
   appBarBackground: Colors.white,
   heading1: AppTheme.heading1Style,
   title1: AppTheme.title1Style,
@@ -98,5 +98,5 @@ final lightAppTheme = AppTheme(
   subtitle2: AppTheme.subtitle2Style,
   body1: AppTheme.body1Style,
   caption: AppTheme.captionStyle,
-  pallete: lightPallete,
+  palette: lightPalette,
 );

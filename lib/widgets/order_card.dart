@@ -6,6 +6,8 @@ import 'package:order_ui/gen/assets.gen.dart';
 import 'package:order_ui/models/order.dart';
 import 'package:order_ui/utils/date_time_formatter.dart';
 import 'package:order_ui/utils/formatters.dart';
+import 'package:order_ui/utils/order_status_helper.dart';
+import 'package:order_ui/widgets/status_label.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -14,11 +16,13 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orderStatusHelper = Modular.get<OrderStatusHelper>();
+
     return InkWell(
       onTap: () => _navigateToDetailPage(context, order.id),
       child: Card(
         margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 12.0),
-        color: Theme.of(context).colorScheme.surface,
+        color: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Padding(
@@ -30,7 +34,7 @@ class OrderCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              IdAndStatus(id: "#${order.id.toString()}", status: order.getStatus(context)),
+              IdAndStatus(id: "#${order.id.toString()}", statusCd: order.statusCd ?? 0),
               SizedBox(height: 12.0),
               AmountTotal(number: order.total ?? 0),
               SizedBox(height: 12.0),
@@ -44,7 +48,7 @@ class OrderCard extends StatelessWidget {
                 destinationPoint: order.toPlace ?? 'Unknown',
               ),
               SizedBox(height: 12.0),
-              ButtonInOrderItem(textButton: 'Tip driver'),
+              ButtonInOrderItem(status: orderStatusHelper.getStatusText(context, order.statusCd ?? 0)),
             ],
           ),
         ),
@@ -55,27 +59,6 @@ class OrderCard extends StatelessWidget {
 
 void _navigateToDetailPage(BuildContext context, int id) {
   Modular.to.pushNamed('/order/status/$id');
-}
-
-class StatusLabel extends StatelessWidget {
-  const StatusLabel({super.key, required this.status});
-
-  final String status;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 6, bottom: 6, left: 12, right: 12),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.tertiaryContainer,
-        borderRadius: BorderRadius.circular(6),
-      ),
-      child: Text(
-        status,
-        style: TextStyle(color: Theme.of(context).colorScheme.onTertiaryContainer),
-      ),
-    );
-  }
 }
 
 class IconWithText extends StatelessWidget {
@@ -101,14 +84,15 @@ class IconWithText extends StatelessWidget {
 }
 
 class IdAndStatus extends StatelessWidget {
-  const IdAndStatus({super.key, required this.id, required this.status});
+  const IdAndStatus({super.key, required this.id, required this.statusCd});
 
-  final String id, status;
+  final String id;
+  final int statusCd;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [Text(id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 0.04)), SizedBox(width: 8.0), StatusLabel(status: status,)],
+      children: [Text(id, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 0.04)), SizedBox(width: 8.0), StatusLabel(status: statusCd)],
     );
   }
 }
@@ -120,7 +104,7 @@ class AmountTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconWithText(iconAsset: Assets.icons.creditCard, color: context.appTheme.pallete.neutral3, text: formatWon(number));
+    return IconWithText(iconAsset: Assets.icons.creditCard, color: context.appTheme.palette.neutral3, text: formatWon(number));
   }
 }
 
@@ -138,7 +122,7 @@ class DetailDateAndVehicle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Date Order', style: TextStyle(color: context.appTheme.pallete.neutral3)),
+            Text('Date Order', style: TextStyle(color: context.appTheme.palette.neutral3)),
             SizedBox(height: 4.0,),
             Text(dateOrder, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
@@ -146,7 +130,7 @@ class DetailDateAndVehicle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Vehicle', style: TextStyle(color: context.appTheme.pallete.neutral3)),
+            Text('Vehicle', style: TextStyle(color: context.appTheme.palette.neutral3)),
             SizedBox(height: 4.0,),
             Text(vehicle, style: TextStyle(fontWeight: FontWeight.bold)),
           ],
@@ -194,10 +178,10 @@ class Address extends StatelessWidget {
                 child: Container(
                   width: 1,
                   margin: const EdgeInsets.symmetric(vertical: 6),
-                  color: context.appTheme.pallete.neutral2,
+                  color: context.appTheme.palette.neutral2,
                 ),
               ),
-              IconSection(icon: Assets.icons.point, color: Theme.of(context).colorScheme.error),
+              IconSection(icon: Assets.icons.point, color: context.appTheme.palette.danger),
             ],
           ),
           const SizedBox(width: 8),
@@ -234,8 +218,8 @@ class ButtonSection extends StatelessWidget {
           backgroundColor:
               status == 'Completed'
                   ? Colors.transparent
-                  : Theme.of(context).colorScheme.primary,
-          side: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.0),
+                  : context.appTheme.palette.primary,
+          side: BorderSide(color: context.appTheme.palette.primary, width: 1.0),
           elevation: 0,
         ),
         child: Padding(
@@ -248,7 +232,7 @@ class ButtonSection extends StatelessWidget {
               letterSpacing: 0.04,
               color:
                   status == 'Completed'
-                      ? Theme.of(context).colorScheme.primary
+                      ? context.appTheme.palette.primary
                       : Theme.of(context).colorScheme.onPrimary,
             ),
           ),
@@ -259,9 +243,8 @@ class ButtonSection extends StatelessWidget {
 }
 
 class ButtonInOrderItem extends StatelessWidget {
-  const ButtonInOrderItem({super.key, required this.textButton, this.status});
+  const ButtonInOrderItem({super.key, this.status});
 
-  final String textButton;
   final String? status;
 
   @override

@@ -60,7 +60,7 @@ class _OrderListPageState extends State<OrderListPage> {
                   bottom: 12.0,
                   left: 20.0,
                 ),
-                child: const SizedBox(height: 44, child: ListChip()),
+                child: const ListChip(),
               ),
             ),
           ),
