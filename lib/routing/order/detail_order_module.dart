@@ -24,5 +24,6 @@ class DetailOrderModule extends Module {
       },
       transition: TransitionType.rightToLeft,
     );
+
   }
 }

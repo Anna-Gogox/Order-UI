@@ -73,6 +73,8 @@ class AppTheme extends ThemeExtension<AppTheme> with _$AppThemeTailorMixin {
 
 const lightPalette = AppPalette(
   primary: Color(0xFF0088BF),
+  primaryLight: Color(0xFFE0EAF8),
+  primaryDark: Color(0xFF005085),
   secondary: Color(0xFFFAEC8A),
   danger: Color(0xFFEA5265),
   success: Color(0xFF00AEB1),

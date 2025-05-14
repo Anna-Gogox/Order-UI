@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderStatusHelper {
-  String getStatusText(BuildContext context, int statusCd) {
+  String getStatusText(BuildContext context, int? statusCd) {
     final localizations = AppLocalizations.of(context)!;
     switch (statusCd) {
       case 1:
@@ -20,7 +20,7 @@ class OrderStatusHelper {
       case 7:
         return localizations.orderStatusWaitingForPayment;
       default:
-        return localizations.ordersStatusPending;
+        return localizations.something_went_wrong;
     }
   }
 }

@@ -34,7 +34,7 @@ class OrderCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              IdAndStatus(id: "#${order.id.toString()}", statusCd: order.statusCd ?? 0),
+              IdAndStatus(id: "#${order.id.toString()}", statusCd: order.statusCd),
               SizedBox(height: 12.0),
               AmountTotal(number: order.total ?? 0),
               SizedBox(height: 12.0),
@@ -87,7 +87,7 @@ class IdAndStatus extends StatelessWidget {
   const IdAndStatus({super.key, required this.id, required this.statusCd});
 
   final String id;
-  final int statusCd;
+  final int? statusCd;
 
   @override
   Widget build(BuildContext context) {

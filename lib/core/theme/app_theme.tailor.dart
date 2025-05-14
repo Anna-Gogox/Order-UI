@@ -32,7 +32,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
     TextStyle? subtitle2,
     TextStyle? body1,
     TextStyle? caption,
-    AppPalette? pallete,
+    AppPalette? palette,
   }) {
     return AppTheme(
       background: background ?? this.background,
@@ -44,7 +44,7 @@ mixin _$AppThemeTailorMixin on ThemeExtension<AppTheme> {
       subtitle2: subtitle2 ?? this.subtitle2,
       body1: body1 ?? this.body1,
       caption: caption ?? this.caption,
-      palette: pallete ?? this.palette,
+      palette: palette ?? this.palette,
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:order_ui/utils/order_status_helper.dart';
 
 class StatusLabel extends StatelessWidget {
   const StatusLabel({super.key, required this.status});
-  final int status;
+  final int? status;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class StatusLabel extends StatelessWidget {
     final List<Color> colors = colorStatus(context, status);
 
     return Container(
-      padding: EdgeInsets.only(top: 6, bottom: 6, left: 12, right: 12),
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 7, right: 7),
       decoration: BoxDecoration(
         color: colors[1],
         borderRadius: BorderRadius.circular(6),
@@ -27,7 +27,7 @@ class StatusLabel extends StatelessWidget {
 }
 
 // List colors for text - background status
-List<Color> colorStatus(BuildContext context, int status) {
+List<Color> colorStatus(BuildContext context, int? status) {
   final customTheme = context.appTheme;
 
   switch (status) {
@@ -36,7 +36,7 @@ List<Color> colorStatus(BuildContext context, int status) {
     case 2:
       return [Colors.white, customTheme.palette.status2];
     case 3:
-      return [Colors.white, customTheme.palette.primary];
+      return [customTheme.palette.primaryDark, customTheme.palette.primaryLight];
     case 4:
       return [Colors.white, customTheme.palette.primary];
     case 5:

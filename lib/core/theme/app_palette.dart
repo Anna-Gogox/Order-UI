@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class AppPalette {
   final Color primary;
+  final Color primaryLight;
+  final Color primaryDark;
   final Color secondary;
   final Color danger;
   final Color success;
@@ -20,6 +22,8 @@ class AppPalette {
 
   const AppPalette({
     required this.primary,
+    required this.primaryLight,
+    required this.primaryDark,
     required this.secondary,
     required this.danger,
     required this.success,

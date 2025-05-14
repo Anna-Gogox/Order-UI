@@ -22,5 +22,7 @@
     "ordersStatusReturned": "Returned",
     "@ordersStatusReturned": {},
     "orderStatusWaitingForPayment": "Waiting for payment",
-    "@orderStatusWaitingForPayment": {}
+    "@orderStatusWaitingForPayment": {},
+    "something_went_wrong": "Something went wrong",
+    "@something_went_wrong": {}
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
@@ -55,6 +56,13 @@ Padding _buildOrder(Map order) {
         Text("Title: ${order['title']}", style: const TextStyle(fontSize: 18)),
         const SizedBox(height: 10),
         Text("Body: ${order['body']}", style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          onPressed: () {
+            Modular.to.pushNamed('/user/me/${order['id']}');
+          },
+          child: const Text("Action Button"),
+        ),
       ],
     ),
   );
