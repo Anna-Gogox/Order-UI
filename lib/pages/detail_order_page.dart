@@ -59,7 +59,7 @@ Padding _buildOrder(Map order) {
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {
-            Modular.to.pushNamed('/user/me/${order['id']}');
+            Modular.to.pushNamed('/user/me/1');
           },
           child: const Text("Action Button"),
         ),
