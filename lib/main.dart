@@ -6,6 +6,7 @@ import 'package:order_ui/blocs/network/network_event.dart';
 import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
+import 'package:order_ui/routing/app_links_deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final themeModeNotifier = ValueNotifier(ThemeMode.light);
+  final AppLinksDeepLink _appLinksDeepLink = AppLinksDeepLink.instance; // Initialize AppLinksDeepLink instance
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class _MyAppState extends State<MyApp> {
       brightness: Brightness.light,
       extensions: [lightAppTheme],
     );
+    _appLinksDeepLink.initDeepLinks();  // Initialize deep links when the app starts
 
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeModeNotifier,
