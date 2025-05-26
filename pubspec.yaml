@@ -49,6 +49,8 @@ dependencies:
   json_annotation: ^4.9.0
   theme_tailor: ^3.0.2
   theme_tailor_annotation: ^3.0.2
+  firebase_core: ^3.13.1
+  firebase_messaging: ^15.2.6
 
 dev_dependencies:
   flutter_test:

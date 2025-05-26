@@ -14,7 +14,7 @@ class AppLinksDeepLink {
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
 
-  void onInit() {
+  void init() {
     _appLinks = AppLinks();
     initDeepLinks();
   }
@@ -24,7 +24,7 @@ class AppLinksDeepLink {
     final appLink = await _appLinks.getInitialLink();
     if (appLink != null) {
       var uri = Uri.parse(appLink.toString());
-      debugPrint(' here you can redirect from url as per your need ');
+      debugPrint(' here you can redirect from url as per your need - $uri');
     }
 
     // Handle link when app is in warm state (front or background)
