@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "888232445135",
+    "project_id": "my-order-example-flutter-app",
+    "storage_bucket": "my-order-example-flutter-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888232445135:android:7dc1fed11226ecc73563ba",
+        "android_client_info": {
+          "package_name": "com.example.order_ui"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7XJFzpS7cE_1qDj62TDANc5voVwraWlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
