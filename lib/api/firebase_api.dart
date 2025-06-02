@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class FirebaseApi {
+  
   // create an instance of Firebase Messaging
   final _firebaseMessaging = FirebaseMessaging.instance;
 
