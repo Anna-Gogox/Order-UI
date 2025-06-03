@@ -9,11 +9,13 @@ import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:order_ui/routing/app_links_deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
+import 'package:order_ui/services/notification_service.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  //await NotificationService.instance.initialize();
   await Firebase.initializeApp(); // Initialize Firebase
   await FirebaseApi().initNotification(); // Initialize Firebase notifications
   runApp(ModularApp(module: AppModule(), child: MyApp()));
