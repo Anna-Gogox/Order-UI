@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:logging/logging.dart';
 import 'package:order_ui/api/firebase_api.dart';
 import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_event.dart';
@@ -9,16 +10,23 @@ import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:order_ui/routing/app_links_deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
-import 'package:order_ui/services/notification_service.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
+  _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
   //await NotificationService.instance.initialize();
   await Firebase.initializeApp(); // Initialize Firebase
   await FirebaseApi().initNotification(); // Initialize Firebase notifications
   runApp(ModularApp(module: AppModule(), child: MyApp()));
+}
+
+void _setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
 }
 
 class MyApp extends StatefulWidget {
