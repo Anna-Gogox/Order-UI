@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/widgets/list_chip.dart';
 import 'package:order_ui/widgets/order_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 
 class OrderListPage extends StatefulWidget {
   const OrderListPage({super.key});
@@ -22,7 +22,7 @@ class OrderListPage extends StatefulWidget {
 class _OrderListPageState extends State<OrderListPage> {
   @override
   Widget build(BuildContext context) {
-    final orderService = Provider.of<OrderService>(context, listen: false);
+    final orderService = Modular.get<OrderService>();
     final customTheme = context.appTheme;
 
     return BlocProvider<OrderListBloc>(
@@ -37,7 +37,7 @@ class _OrderListPageState extends State<OrderListPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Back online')),
             );
-            context.read<OrderListBloc>().add(OrderListFetchEvent());
+            BlocProvider.of<OrderListBloc>(context).add(OrderListFetchEvent());
           }
         },
         child: Scaffold(
@@ -87,14 +87,14 @@ class _OrderListPageState extends State<OrderListPage> {
 Widget _buildOrderList(BuildContext context, List orders, OrderListState state) {
   return RefreshIndicator(
     onRefresh: () async {
-      context.read<OrderListBloc>().add(OrderListRefreshEvent());
+      BlocProvider.of<OrderListBloc>(context).add(OrderListRefreshEvent());
     },
     child: NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
         if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
           !state.isLoading &&
           state.hasMore) {
-            context.read<OrderListBloc>().add(OrderListLoadMoreEvent());
+            BlocProvider.of<OrderListBloc>(context).add(OrderListLoadMoreEvent());
           }
           return false;
       },

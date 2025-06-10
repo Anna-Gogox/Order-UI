@@ -10,11 +10,10 @@ import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:order_ui/routing/app_links_deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
-import 'package:order_ui/services/order_service.dart';
-import 'package:provider/provider.dart';
 
 void main() async{
   _setupLogging();
+  //AppLinksDeepLink()._initDeepLinks(); // Initialize deep links
   WidgetsFlutterBinding.ensureInitialized();
   //await NotificationService.instance.initialize();
   await Firebase.initializeApp(); // Initialize Firebase
@@ -51,23 +50,19 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeModeNotifier,
       builder: (_, themeMode, __) {
-        return Provider<OrderService>(
-          create: (_) => OrderService.create(),
-          dispose: (_, OrderService service) => service.client.dispose(),
-          child: BlocProvider<NetworkBloc>(
-            create: (context) => NetworkBloc()..add(NetworkObserve()),
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              theme: lightThemeData,
-              themeMode: themeMode,
-              routerConfig: Modular.routerConfig,
-            ),
+        return BlocProvider<NetworkBloc>(
+          create: (context) => NetworkBloc()..add(NetworkObserve()),
+          child: MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: lightThemeData,
+            themeMode: themeMode,
+            routerConfig: Modular.routerConfig,
           ),
         );
-      }
+      },
     );
   }
 }
