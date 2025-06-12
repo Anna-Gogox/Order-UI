@@ -1,0 +1,15 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.example.order_ui",
+            "sha256_cert_fingerprints": [
+                "BC:23:8E:75:07:88:36:CD:2F:01:A2:49:21:9D:C9:E5:2A:A8:A0:E2:D6:A1:C1:6A:21:E3:8B:AC:65:24:77:6F"
+            ]
+        }
+    }
+]
+  
