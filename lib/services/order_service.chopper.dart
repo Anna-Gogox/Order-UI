@@ -19,12 +19,9 @@ final class _$OrderService extends OrderService {
   final Type definitionType = OrderService;
 
   @override
-  Future<Response<dynamic>> getOrders({String filter = "all", int page = 1}) {
+  Future<Response<dynamic>> getOrders({String filter = "all"}) {
     final Uri $url = Uri.parse('/order/history');
-    final Map<String, dynamic> $params = <String, dynamic>{
-      'filter': filter,
-      'page': page,
-    };
+    final Map<String, dynamic> $params = <String, dynamic>{'filter': filter};
     final Request $request = Request(
       'GET',
       $url,

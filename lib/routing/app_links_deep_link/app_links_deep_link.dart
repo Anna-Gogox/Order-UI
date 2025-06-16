@@ -27,13 +27,15 @@ class AppLinksDeepLink {
             .getInitialLink(); // Checks if the app was launched via a deep link. If yes, you receive the link as appLink.
     if (appLink != null) {
       final uri = Uri.parse(appLink.toString());
+      debugPrint('onAppLink(cold state): $uri');
       openAppLink(uri);
+      return;
     }
 
     // Handle link when app is in warm state (front or background)
     _linkSubscription = _appLinks.uriLinkStream.listen(
       (uri) {
-        debugPrint('onAppLink: $uri');
+        debugPrint('onAppLink(warm state): $uri');
         openAppLink(uri);
       },
       onError: (err) {
@@ -56,6 +58,7 @@ class AppLinksDeepLink {
   }
   
   void _navigateToOrderDetail(String orderId) {
+    debugPrint('Navigating to order detail with ID: $orderId');
     Modular.to.pushNamed('/order/status/$orderId');
   }
 

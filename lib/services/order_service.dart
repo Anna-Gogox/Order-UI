@@ -8,7 +8,6 @@ abstract class OrderService extends ChopperService{
   @GET(path: '/history')
   Future<Response> getOrders({
     @Query("filter") String filter = "all",
-    @Query('page') int page = 1,
   });
 
   @GET(path: '/status')
@@ -20,7 +19,7 @@ abstract class OrderService extends ChopperService{
       services: [_$OrderService()],
       converter: JsonConverter(),
       interceptors: [
-        HeadersInterceptor({'Authorization': 'Token token=MZv5MLbKdS5ByjhgCcBJ9PTs'}),
+        HeadersInterceptor({'Authorization': 'Token token='}),
         HttpLoggingInterceptor(), // this logs requests/responses
         CurlInterceptor(), // this logs requests as cURL
       ]

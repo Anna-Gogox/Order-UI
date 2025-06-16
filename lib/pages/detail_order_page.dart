@@ -50,11 +50,13 @@ Padding _buildOrder(Map order) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Order ID: ${order['id']}", style: const TextStyle(fontSize: 20)),
+        Text("Order ID: ${order['order']['ID']}", style: const TextStyle(fontSize: 20)),
         const SizedBox(height: 10),
-        Text("Title: ${order['title']}", style: const TextStyle(fontSize: 18)),
+        Text("User ID: ${order['order']['UserID']}", style: const TextStyle(fontSize: 18)),
         const SizedBox(height: 10),
-        Text("Body: ${order['body']}", style: const TextStyle(fontSize: 16)),
+        Text("Status Name: ${order['order']['StatusName']}", style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 10),
+        Text("Appointment At: ${order['order']['AppointmentAt']}", style: const TextStyle(fontSize: 16)),
         const SizedBox(height: 10),
         ElevatedButton(
           onPressed: () {

@@ -9,7 +9,6 @@ import 'package:order_ui/services/order_service.dart';
 class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
 
   final OrderService orderService;
-  int _page = 1;
 
   OrderListBloc(this.orderService) : super(OrderListState()) {
     on<OrderListFetchEvent>(_onFetchOrders);
@@ -23,11 +22,10 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
   ) async {
     emit(state.copyWith(isLoading: true, errorMessage: null, filter: event.filter));
     try {
-      final response = await orderService.getOrders(filter: event.filter, page: 1);
+      final response = await orderService.getOrders(filter: event.filter);
       final List<dynamic> data = response.body;
       final List<Order> orders =
           data.map((json) => Order.fromJson(json)).toList();
-      _page = 2;
 
       emit(
         state.copyWith(
@@ -53,11 +51,10 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
     if (!state.hasMore) return;
 
     try {
-      final response = await orderService.getOrders(filter: state.filter, page: _page);
+      final response = await orderService.getOrders(filter: state.filter);
       final List<dynamic> data = response.body;
       final List<Order> moreOrders =
           data.map((json) => Order.fromJson(json)).toList();
-      _page++;
 
       emit(
         state.copyWith(
@@ -78,10 +75,9 @@ class OrderListBloc extends Bloc<OrderListEvent, OrderListState> {
   Future<void> _onRefreshOrders(OrderListRefreshEvent event, Emitter<OrderListState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
-      final response = await orderService.getOrders(filter: state.filter, page: 1);
+      final response = await orderService.getOrders(filter: state.filter);
       final List<dynamic> data = response.body;
       final List<Order> orders = data.map((json) => Order.fromJson(json)).toList();
-      _page = 2;
 
       emit(
         state.copyWith(
