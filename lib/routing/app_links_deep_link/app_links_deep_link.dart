@@ -53,13 +53,20 @@ class AppLinksDeepLink {
 
     if (path == '/status' && orderId != null) {
       debugPrint('navigateTo: $uri');
-      _navigateToOrderDetail(orderId);
+      _navigateToOrderDetail(int.parse(orderId));
     }
   }
   
-  void _navigateToOrderDetail(String orderId) {
-    debugPrint('Navigating to order detail with ID: $orderId');
-    Modular.to.pushNamed('/order/status/$orderId');
+  void _navigateToOrderDetail(int orderId) {
+    // debugPrint('Navigating to order detail with ID: $orderId');
+    // Modular.to.pushNamed('/order/status/$orderId');
+
+//     try {
+//   await Modular.to.pushNamed('/order/status/$orderId');
+//   debugPrint('✅ Navigation to /order/status/$orderId complete');
+// } catch (e) {
+//   debugPrint('❌ Navigation failed: $e');
+// }
   }
 
 }

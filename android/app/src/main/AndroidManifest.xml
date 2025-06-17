@@ -30,7 +30,7 @@
             <intent-filter android:autoVerify="true">
                 <data 
                     android:scheme="myapp" 
-                    android:host="order.com" />
+                    android:host="order" />
 
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

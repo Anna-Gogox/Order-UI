@@ -7,10 +7,10 @@ import 'package:order_ui/blocs/order/order_list/order_list_bloc.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_event.dart';
 import 'package:order_ui/blocs/order/order_list/order_list_state.dart';
 import 'package:order_ui/core/theme/app_theme.dart';
+import 'package:order_ui/l10n/app_localizations.dart';
 import 'package:order_ui/services/order_service.dart';
 import 'package:order_ui/widgets/list_chip.dart';
 import 'package:order_ui/widgets/order_card.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderListPage extends StatefulWidget {
   const OrderListPage({super.key});

@@ -14,6 +14,8 @@ class DetailOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('🚀 StatusPage opened with orderId: $orderId');
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Order Detail"),
