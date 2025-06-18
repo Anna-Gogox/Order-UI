@@ -48,25 +48,21 @@ class AppLinksDeepLink {
   }
 
   Future<void> openAppLink(Uri uri) async {
-    final path = uri.path;
-    final orderId = uri.queryParameters['order_id'];
+  final path = uri.path;
+  final orderId = uri.queryParameters['order_id'];
 
-    if (path == '/status' && orderId != null) {
-      debugPrint('navigateTo: $uri');
+  if (path == '/status' && orderId != null) {
+    debugPrint('navigateTo: $uri');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _navigateToOrderDetail(int.parse(orderId));
-    }
+    });
   }
+}
   
-  void _navigateToOrderDetail(int orderId) {
-    // debugPrint('Navigating to order detail with ID: $orderId');
-    // Modular.to.pushNamed('/order/status/$orderId');
-
-//     try {
-//   await Modular.to.pushNamed('/order/status/$orderId');
-//   debugPrint('✅ Navigation to /order/status/$orderId complete');
-// } catch (e) {
-//   debugPrint('❌ Navigation failed: $e');
-// }
+  void _navigateToOrderDetail(orderId) {
+    debugPrint('Navigating to order detail with ID: $orderId');
+    Modular.to.pushNamed('/order/status/$orderId');
   }
 
 }

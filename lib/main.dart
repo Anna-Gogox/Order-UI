@@ -35,15 +35,8 @@ void _setupLogging() {
   });
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final themeModeNotifier = ValueNotifier(ThemeMode.light);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +44,7 @@ class _MyAppState extends State<MyApp> {
       brightness: Brightness.light,
       extensions: [lightAppTheme],
     );
+    final themeModeNotifier = ValueNotifier(ThemeMode.light);
 
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeModeNotifier,
