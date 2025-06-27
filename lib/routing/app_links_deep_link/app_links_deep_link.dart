@@ -15,24 +15,29 @@ class AppLinksDeepLink {
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
 
+  void dispose() {
+    _linkSubscription?.cancel();
+  }
+
   void init() {
     _appLinks = AppLinks();
     initDeepLinks();
   }
 
+  // Add this as a class variable to store the initial link
+  Uri? _pendingInitialLink;
+
   Future<void> initDeepLinks() async {
-    // Check initial link if app was in cold state (terminated)
-    final appLink =
-        await _appLinks
-            .getInitialLink(); // Checks if the app was launched via a deep link. If yes, you receive the link as appLink.
-    if (appLink != null) {
-      final uri = Uri.parse(appLink.toString());
-      debugPrint('onAppLink(cold state): $uri');
-      openAppLink(uri);
-      return;
+    // Check for initial link but don't navigate yet
+    final initialLink = await _appLinks.getInitialLink();
+    if (initialLink != null) {
+      _pendingInitialLink = Uri.parse(initialLink.toString());
+      debugPrint(
+        'Stored initial link for later processing: $_pendingInitialLink',
+      );
     }
 
-    // Handle link when app is in warm state (front or background)
+    // Set up listener for when app is already running
     _linkSubscription = _appLinks.uriLinkStream.listen(
       (uri) {
         debugPrint('onAppLink(warm state): $uri');
@@ -41,28 +46,40 @@ class AppLinksDeepLink {
       onError: (err) {
         debugPrint('====>>> error : $err');
       },
-      onDone: () {
-        _linkSubscription?.cancel();
-      },
     );
   }
 
-  Future<void> openAppLink(Uri uri) async {
-  final path = uri.path;
-  final orderId = uri.queryParameters['order_id'];
-
-  if (path == '/status' && orderId != null) {
-    debugPrint('navigateTo: $uri');
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _navigateToOrderDetail(int.parse(orderId));
-    });
+  // Call this method after your app is fully initialized
+  void processPendingDeepLink() {
+    if (_pendingInitialLink != null) {
+      debugPrint('Processing pending deep link: $_pendingInitialLink');
+      openAppLink(_pendingInitialLink!);
+      _pendingInitialLink = null; // Clear it after processing
+    }
   }
-}
-  
-  void _navigateToOrderDetail(orderId) {
+
+  Future<void> openAppLink(Uri uri) async {
+    final path = uri.path;
+    final orderId = uri.queryParameters['order_id'];
+
+    if (path == '/status' && orderId != null) {
+      debugPrint('navigateTo: $uri');
+
+      _navigateToOrderDetail(int.parse(orderId));
+    }
+  }
+
+  void _navigateToOrderDetail(int orderId) {
     debugPrint('Navigating to order detail with ID: $orderId');
-    Modular.to.pushNamed('/order/status/$orderId');
+
+    Modular.to.pushNamedAndRemoveUntil(
+      '/',
+      (route) => false,
+    );
+    Modular.to.pushNamed(
+      '/order/status/$orderId',
+      arguments: {'orderId': orderId},
+    );
   }
 
 }

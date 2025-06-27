@@ -22,7 +22,7 @@ class DetailOrderModule extends Module {
           child: DetailOrderScreen(orderId: id),
         );
       },
-      transition: TransitionType.rightToLeft,
+      transition: TransitionType.defaultTransition,
     );
 
   }

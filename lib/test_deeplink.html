@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deep Link Test</title>
+    <script>
+        // Optional: Auto-redirect after a short delay
+        window.onload = function() {
+            // You can uncomment the line below to auto-redirect
+            // window.location.replace("myapp://order/status?order_id=1322795");
+        };
+    </script>
+</head>
+<body>
+    <h1>Deep Link Test Page</h1>
+    <p>Click the link below to open your app:</p>
+    <p>
+        <a href="myapp://order/status?order_id=1322795">Open My App Status Page</a>
+    </p>
+    <p>
+        You can also try this for another order:<br>
+        <a href="myapp://order/status?order_id=998877">Open My App Order 998877</a>
+    </p>
+    <p>If the app doesn't open, ensure it's installed and deep linking is configured correctly.</p>
+</body>
+</html>
