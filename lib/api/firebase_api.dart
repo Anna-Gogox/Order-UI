@@ -12,6 +12,9 @@ class FirebaseApi {
     // request permission from user (will prompt user)
     await _firebaseMessaging.requestPermission();
 
+    String? apnsToken = await _firebaseMessaging.getAPNSToken();
+    debugPrint('APNs token: $apnsToken');
+
     // fetch the FCM token for this device
     final fCMToken = await _firebaseMessaging.getToken();
 

@@ -42,6 +42,7 @@ class AppLinksDeepLink {
       (uri) {
         debugPrint('onAppLink(warm state): $uri');
         openAppLink(uri);
+        //_pendingInitialLink = uri; // Store the link for later processing
       },
       onError: (err) {
         debugPrint('====>>> error : $err');
