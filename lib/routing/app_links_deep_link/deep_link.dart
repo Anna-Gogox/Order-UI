@@ -59,12 +59,12 @@ class DeepLink {
         });
       } else {
         openAppLink(_pendingInitialLink!);
-          _pendingInitialLink = null;
+        _pendingInitialLink = null;
       }
     }
   }
 
-  Future<void> openAppLink(Uri uri) async {
+ Future<void> openAppLink(Uri uri) async {
     final path = uri.path;
     final orderId = uri.queryParameters['order_id'];
 
@@ -72,7 +72,7 @@ class DeepLink {
       debugPrint('navigateTo: $uri');
 
       _navigateToOrderDetail(int.parse(orderId));
-    }
+    } 
   }
 
   void _navigateToOrderDetail(int orderId) {

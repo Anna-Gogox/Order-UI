@@ -19,7 +19,7 @@ abstract class OrderService extends ChopperService{
       services: [_$OrderService()],
       converter: JsonConverter(),
       interceptors: [
-        HeadersInterceptor({'Authorization': 'Token token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYXV0aFR5cGUiOiIiLCJfYnJhbmNoQ29kZSI6MCwiX2lkIjozNTczMDQsIl9pZFRva2VuIjoiMDFiZjY2OGMtZTRlZi0xMWVmLTlhNjctMGFkNjE2MTUwMzAyIiwiX29yZ0lkIjo0MzkxLCJleHAiOjE3NTE1Mjg2ODEsIm9yaWdfaWF0IjoxNzUxNTI1MDgxfQ.e8yKrUR41TNtr5M_333ulh1S_8fGtBIHxlXm3rRQuLw'}),
+        HeadersInterceptor({'Authorization': 'Token token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYXV0aFR5cGUiOiIiLCJfYnJhbmNoQ29kZSI6MCwiX2lkIjozNTczMDQsIl9pZFRva2VuIjoiMDFiZjY2OGMtZTRlZi0xMWVmLTlhNjctMGFkNjE2MTUwMzAyIiwiX29yZ0lkIjo0MzkxLCJleHAiOjE3NTE1MzI4NzksIm9yaWdfaWF0IjoxNzUxNTI5Mjc5fQ.g2Myu9OnAJXFzN9YLwg6EuCAjxbkoFWf2H3VDXAnGNA'}),
         HttpLoggingInterceptor(), // this logs requests/responses
         CurlInterceptor(), // this logs requests as cURL
       ]
