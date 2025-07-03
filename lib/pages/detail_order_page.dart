@@ -1,34 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:order_ui/blocs/network/network_bloc.dart';
-import 'package:order_ui/blocs/network/network_state.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_bloc.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_event.dart';
 import 'package:order_ui/blocs/order/detail_order/detail_order_state.dart';
 
-class DetailOrderScreen extends StatelessWidget {
+class DetailOrderScreen extends StatefulWidget {
   final int orderId;
 
   const DetailOrderScreen({super.key, required this.orderId});
 
   @override
-  Widget build(BuildContext context) {
-    debugPrint('🚀 StatusPage opened with orderId: $orderId');
+  State<DetailOrderScreen> createState() => _DetailOrderScreenState();
+}
 
+class _DetailOrderScreenState extends State<DetailOrderScreen> {
+  late final DetailOrderBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = Modular.get<DetailOrderBloc>();
+    _bloc.add(DetailOrderRequested(widget.orderId));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider.value(
+      value: _bloc,
+      child: _DetailOrderView(),
+    );
+  }
+}
+
+class _DetailOrderView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Order Detail"),
       ),
-      body: BlocListener<NetworkBloc, NetworkState>(
-        listener: (context, state) {
-          if (state is NetworkSuccess) {
-            final orderId = this.orderId;
-            BlocProvider.of<DetailOrderBloc>(context)
-                .add(DetailOrderRequested(orderId));
-          }
-        },
-        child: BlocBuilder<DetailOrderBloc, DetailOrderState>(
+      body: BlocBuilder<DetailOrderBloc, DetailOrderState>(
           builder: (context, snapshot) {
             if (snapshot is DetailOrderLoadingState) {
               return const Center(child: CircularProgressIndicator());
@@ -41,7 +53,6 @@ class DetailOrderScreen extends StatelessWidget {
             }
           },
         ),
-      ),
     );
   }
 }

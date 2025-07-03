@@ -8,7 +8,7 @@ import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_event.dart';
 import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:order_ui/l10n/app_localizations.dart';
-import 'package:order_ui/routing/app_links_deep_link/app_links_deep_link.dart';
+import 'package:order_ui/routing/app_links_deep_link/deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
 // import 'firebase_options.dart';
 
@@ -26,7 +26,7 @@ void main() async{
   // await FirebaseApi().initNotification(); 
 
   // Initialize deep links
-  AppLinksDeepLink.instance.init(); 
+  DeepLink.instance.init(); 
 
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      AppLinksDeepLink.instance.processPendingDeepLink();
+      DeepLink.instance.processPendingDeepLink();
     });
   }
 

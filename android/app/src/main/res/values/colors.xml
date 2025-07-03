@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- android/app/src/main/res/values/colors.xml -->
+    <color name="splash_background">#FFFFFF</color> <!-- or your splash color -->
+</resources>
+

@@ -1,19 +1,23 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class AppLinksDeepLink {
-  AppLinksDeepLink._privateConstructor();
+class DeepLink {
+  DeepLink._privateConstructor();
 
-  static final AppLinksDeepLink _instance =
-      AppLinksDeepLink._privateConstructor();
+  static final DeepLink _instance =
+      DeepLink._privateConstructor();
 
-  static AppLinksDeepLink get instance => _instance;
+  static DeepLink get instance => _instance;
 
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
+
+  // Add this as a class variable to store the initial link
+  Uri? _pendingInitialLink;
 
   void dispose() {
     _linkSubscription?.cancel();
@@ -24,17 +28,11 @@ class AppLinksDeepLink {
     initDeepLinks();
   }
 
-  // Add this as a class variable to store the initial link
-  Uri? _pendingInitialLink;
-
   Future<void> initDeepLinks() async {
     // Check for initial link but don't navigate yet
     final initialLink = await _appLinks.getInitialLink();
     if (initialLink != null) {
       _pendingInitialLink = Uri.parse(initialLink.toString());
-      debugPrint(
-        'Stored initial link for later processing: $_pendingInitialLink',
-      );
     }
 
     // Set up listener for when app is already running
@@ -42,7 +40,6 @@ class AppLinksDeepLink {
       (uri) {
         debugPrint('onAppLink(warm state): $uri');
         openAppLink(uri);
-        //_pendingInitialLink = uri; // Store the link for later processing
       },
       onError: (err) {
         debugPrint('====>>> error : $err');
@@ -54,8 +51,16 @@ class AppLinksDeepLink {
   void processPendingDeepLink() {
     if (_pendingInitialLink != null) {
       debugPrint('Processing pending deep link: $_pendingInitialLink');
-      openAppLink(_pendingInitialLink!);
-      _pendingInitialLink = null; // Clear it after processing
+
+      if (Platform.isIOS) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          openAppLink(_pendingInitialLink!);
+          _pendingInitialLink = null; // Clear it after processing
+        });
+      } else {
+        openAppLink(_pendingInitialLink!);
+          _pendingInitialLink = null;
+      }
     }
   }
 
