@@ -26,7 +26,7 @@ void main() async{
   // await FirebaseApi().initNotification(); 
 
   // Initialize deep links
-  DeepLink.instance.init(); 
+  await DeepLink.instance.init(); 
 
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
