@@ -15,7 +15,7 @@ import 'package:order_ui/routing/app_module.dart';
 void main() async{
   _setupLogging();
 
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
   // await Firebase.initializeApp(
