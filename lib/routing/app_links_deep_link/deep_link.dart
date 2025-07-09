@@ -12,42 +12,15 @@ class DeepLink {
 
   static DeepLink get instance => _instance;
 
-  Uri? _initialUri;            // <- NEW
-  bool _initialStreamSkipped = false;
-  late final AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSub;
 
-  Future<void> init() async {
-    _appLinks = AppLinks();
-    await _initDeepLinks();   // <-- CHỜ xong
-  }
-
-  Future<void> _initDeepLinks() async {
-    _initialUri = await _appLinks.getInitialLink();
-    if (_initialUri != null) {
-      debugPrint('onAppLink(cold state): $_initialUri');
-    }
-
-    _linkSub = _appLinks.uriLinkStream.listen((uri) {
-      // Bỏ sự kiện đầu nếu trùng initialUri
-      if (!_initialStreamSkipped &&
-          _initialUri != null &&
-          uri == _initialUri) {
-        _initialStreamSkipped = true;
-        return;                    
-      }
-      debugPrint('onAppLink(warm state): $uri');
+  Future<void> initDeepLinks() async {
+    _linkSub = AppLinks().uriLinkStream.listen((uri) {
       openAppLink(uri);
     }, onError: (err) => debugPrint('error: $err'));
   }
 
-  void processPendingDeepLink() {
-    if (_initialUri != null) {
-      openAppLink(_initialUri!);
-    }
-  }
-
-   Future<void> openAppLink(Uri uri) async {
+  Future<void> openAppLink(Uri uri) async {
     final path = uri.path;
     final orderId = uri.queryParameters['order_id'];
 
@@ -55,7 +28,7 @@ class DeepLink {
       debugPrint('navigateTo: $uri');
 
       _navigateToOrderDetail(int.parse(orderId));
-    } 
+    }
   }
 
   void _navigateToOrderDetail(int orderId) {

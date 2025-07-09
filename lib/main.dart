@@ -25,9 +25,6 @@ void main() async{
   // // Initialize Firebase notifications
   // await FirebaseApi().initNotification(); 
 
-  // Initialize deep links
-  await DeepLink.instance.init(); 
-
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
 
@@ -50,9 +47,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      DeepLink.instance.processPendingDeepLink();
-    });
+    DeepLink.instance.initDeepLinks();
   }
 
   @override
