@@ -1,32 +1,27 @@
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:logging/logging.dart';
-// import 'package:order_ui/api/firebase_api.dart';
+import 'package:order_ui/api/firebase_api.dart';
 import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_event.dart';
 import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:order_ui/l10n/app_localizations.dart';
 import 'package:order_ui/routing/app_links_deep_link/deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
-// import 'firebase_options.dart';
+import 'firebase_options.dart';
 
 void main() async{
   _setupLogging();
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ); 
 
-  // Initialize Firebase
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // ); 
-
-  // // Initialize Firebase notifications
-  // await FirebaseApi().initNotification(); 
-
-  // Initialize deep links
-  DeepLink.instance.init(); 
+  // Initialize Firebase notifications
+  await FirebaseApi().initNotification(); 
 
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
@@ -50,9 +45,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      DeepLink.instance.processPendingDeepLink();
-    });
+    DeepLink.instance.initDeepLinks();
   }
 
   @override
