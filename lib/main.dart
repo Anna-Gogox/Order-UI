@@ -19,9 +19,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); 
-
   // Initialize Firebase notifications
-  await FirebaseApi().initNotification(); 
+  await FirebaseMessagingService().initNotification(); 
 
   runApp(ModularApp(module: AppModule(), child: MyApp()));
 }
