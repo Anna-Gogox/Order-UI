@@ -6,7 +6,7 @@ import 'package:order_ui/blocs/network/network_bloc.dart';
 import 'package:order_ui/blocs/network/network_event.dart';
 import 'package:order_ui/core/theme/app_theme.dart';
 import 'package:order_ui/l10n/app_localizations.dart';
-import 'package:order_ui/routing/app_links_deep_link/deep_link.dart';
+import 'package:order_ui/services/deep_link.dart';
 import 'package:order_ui/routing/app_module.dart';
 // import 'firebase_options.dart';
 // import 'package:order_ui/api/firebase_api.dart';
@@ -41,11 +41,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late final DeepLinkService _deepLinkService;
+
   @override
   void initState() {
     super.initState();
-    
-    DeepLink.instance.initDeepLinks();
+    _deepLinkService = Modular.get<DeepLinkService>();
+    _deepLinkService.initDeepLinks();
   }
 
   @override
