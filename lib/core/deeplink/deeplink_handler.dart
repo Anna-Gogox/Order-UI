@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'deeplink_routes.dart';
 
-Future<void> openAppLink(Uri uri) async {
+void openAppLink(Uri uri) {
   for (final route in routes) {
     if (route.matcher(uri)) {
       route.handler(uri);
