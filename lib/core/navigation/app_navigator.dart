@@ -5,4 +5,8 @@ class AppNavigator {
     Modular.to.pushNamedAndRemoveUntil('/', (route) => false);
     Modular.to.pushNamed('/order/status/$orderId', arguments: {'orderId': orderId});
   }
+  
+  static void toUserDetail(int userId) {
+    Modular.to.pushNamed('/user/me/1');
+  }
 }
